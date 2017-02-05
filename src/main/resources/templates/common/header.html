@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+<head th:fragment="common-header">
+
+
+<title>Full - Start Bootstrap Template</title>
+<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link th:href="@{/css/style.css}" rel="stylesheet" media="screen" />
+</head>
+
+<div th:fragment="after-body-scripts">
+
+	<script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+</div>
+</html>
