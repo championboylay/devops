@@ -4,13 +4,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.devoppsbuddy.web.i18n.I18NService;
 
-
-
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class DevoppsbuddyApplicationTests {
 
@@ -21,11 +20,12 @@ public class DevoppsbuddyApplicationTests {
 	@Autowired
 	private I18NService i18NService;
 	
+	@Test
 	public void testMessageByLocaleService(){
 		String expectedResult = "A Warm Welcome i18n !";
 		String messgeId = "index.main.callout";
 		String actual = i18NService.getMessage(messgeId);
-		org.junit.Assert.assertEquals("A Warm Welcome i18n !", expectedResult,actual);
+		org.junit.Assert.assertEquals("Internationalization Test Case", expectedResult,actual);
 	}
 
 }
