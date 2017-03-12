@@ -11,11 +11,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.devoppsbuddy.backend.service.UserSecurityService;
+
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends 	WebSecurityConfigurerAdapter{
 
-
+	@Autowired
+	private UserSecurityService userSecurityService;
+	
 	@Autowired
 	private Environment env;
 
@@ -54,10 +58,7 @@ public class SpringSecurityConfig extends 	WebSecurityConfigurerAdapter{
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-        	.withUser("user")
-        	.password("password")
-        	.roles("USER");
+        auth.userDetailsService(userSecurityService);
          
     }
 }

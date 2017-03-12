@@ -1,13 +1,14 @@
 package com.devoppsbuddy.integration;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,6 +28,9 @@ import com.devoppsbuddy.utils.UsersUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DevoppsbuddyApplication.class)
 public class RepositoryIntegrationTest {
+
+	
+	private static final Logger log = LoggerFactory.getLogger(RepositoryIntegrationTest.class);
 
 	@Autowired
 	private PlanRepository planRepository;
@@ -63,13 +67,32 @@ public class RepositoryIntegrationTest {
 
 		Role userRole = createRole(RoleEnum.BASIC);
 		roleRepository.save(userRole);
-
+		
 		Role retrievedRole = roleRepository.findOne(RoleEnum.BASIC.getId());
 		org.junit.Assert.assertNotNull(retrievedRole);
 	}
 	
 	@Test
 	public void testCreateUser(){
+		
+		User basicUser= createBasicUser();
+		basicUser = userRepository.save(basicUser);
+		User newlyCreatedUser = userRepository.findOne(basicUser.getId());
+		org.junit.Assert.assertNotNull(newlyCreatedUser);
+		log.debug("Created new User "+newlyCreatedUser.getId());
+		Set<UserRole> newlyCreatedUserRoles = newlyCreatedUser.getUserRoles();
+		for(UserRole ur:newlyCreatedUserRoles){
+			org.junit.Assert.assertNotNull(ur.getRole());
+		}
+		
+	}
+	
+	//@Test
+	public void deleteUser(){
+		userRepository.delete(createBasicUser().getId());
+	}
+	
+	private User createBasicUser(){
 		Plan plan = createPlan(PlanEnum.BASIC);
 		planRepository.save(plan);
 		
@@ -89,15 +112,7 @@ public class RepositoryIntegrationTest {
 			roleRepository.save(ur.getRole());
 		}
 		
-		basicUser = userRepository.save(basicUser);
-		User newlyCreatedUser = userRepository.findOne(basicUser.getId());
-		org.junit.Assert.assertNotNull(newlyCreatedUser);
-		
-		Set<UserRole> newlyCreatedUserRoles = newlyCreatedUser.getUserRoles();
-		for(UserRole ur:newlyCreatedUserRoles){
-			org.junit.Assert.assertNotNull(ur.getRole());
-		}
-		
+		return basicUser;
 	}
 
 	private Role createRole(RoleEnum roleEnum) {
