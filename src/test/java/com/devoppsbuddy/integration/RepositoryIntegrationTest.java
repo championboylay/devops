@@ -96,7 +96,7 @@ public class RepositoryIntegrationTest {
 		Plan plan = createPlan(PlanEnum.BASIC);
 		planRepository.save(plan);
 		
-		User basicUser = UsersUtils.createBasicUser();
+		User basicUser = UsersUtils.createBasicUser("prouser","promail@mail.com");
 		basicUser.setPlan(plan);
 		
 		Role basicRole = createRole(RoleEnum.BASIC);

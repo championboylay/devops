@@ -34,8 +34,10 @@ public class UserIntegrationTest {
 	
 	@Test
 	public void testCreateNewUser(){
+		String username = "proUser";
+		String email = "promail@mail.com";
 		Set<UserRole> userRoles = new HashSet<>();
-		User basicUser = UsersUtils.createBasicUser();
+		User basicUser = UsersUtils.createBasicUser(username,email);
 		userRoles.add(new UserRole(basicUser,new Role(RoleEnum.BASIC)));
 		User user = userService.creatUser(basicUser, PlanEnum.BASIC, userRoles);
 		org.junit.Assert.assertNotNull(user);
