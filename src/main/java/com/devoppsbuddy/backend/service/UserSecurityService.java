@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devoppsbuddy.backend.persistence.domain.backend.User;
@@ -19,7 +20,7 @@ public class UserSecurityService implements UserDetailsService {
 	
 	
 	private static final Logger log = LoggerFactory.getLogger(UserSecurityService.class);
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
 		log.debug("User count is "+userRepository.findAll());
